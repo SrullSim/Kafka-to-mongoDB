@@ -29,14 +29,3 @@ newsgroups_not_interesting=fetch_20newsgroups(subset='all',categories=not_intere
 
 # pprint(newsgroups_interesting.data)
 
-def batch_generator(data, batch_size=10):
-    for i in range(0, len(data), batch_size):
-        yield data[i:i + batch_size]
-gen_1 = batch_generator(newsgroups_interesting.data, 10)
-gen_2 = batch_generator(newsgroups_not_interesting.data, 10)
-# print(next(gen_1))
-print("==================")
-print("==================")
-print("==================")
-print("==================")
-# print(next(gen_2))
