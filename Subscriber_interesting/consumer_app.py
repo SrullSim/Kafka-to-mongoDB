@@ -8,7 +8,6 @@ app = FastAPI()
 
 @app.get('/get_data')
 async def data():
-    print("pppppp")
     consumer = Consumer("interesting")
     event = consumer.get_consumer_events()
     consumer.consumer_with_auto_commit()
