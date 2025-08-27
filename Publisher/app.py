@@ -21,17 +21,22 @@ async def get_10_news():
     massage = {"10 news ":interesting[ interesting_random_slice : interesting_random_slice +10] }
     try:
         producer.publish_message("interesting", massage)
-        return interesting[ interesting_random_slice : interesting_random_slice +10]
+        return massage
     except Exception as e :
         print("error: ", e)
         return {"error: ": e}
+
 
 @app.get('/not_interesting')
 async def get_10_news():
     producer = Producer()
     massage = {"10 news ": not_interesting[not_interesting_random_slice: not_interesting_random_slice + 10]}
-    producer.publish_message("not_interesting", massage)
-    return not_interesting[ not_interesting_random_slice : not_interesting_random_slice +10]
+    try:
+        producer.publish_message("not_interesting", massage)
+        return massage
+    except Exception as e :
+        print("error: ", e)
+        return {"error: ": e}
 
 
 if __name__ == "__main__":

@@ -41,5 +41,5 @@ p = Producer()
 event = {"App": "Producer 1 first"}
 event_1 = {"my massage": "Producer 2"}
 
-p.publish_message("q1", event_1)
+p.publish_message("interesting", event_1)
 

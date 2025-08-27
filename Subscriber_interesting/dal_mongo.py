@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 
-class DAL_mongo:
+class DAL_Mongo:
 
     def __init__(self, host, database, collection, user= None, password= None):
         self.host = host
@@ -11,6 +11,7 @@ class DAL_mongo:
         self.password = password
         self.URI = self.get_URI()
         self.client = None
+        self.connect = False
 
 
     def get_URI(self):
@@ -27,6 +28,7 @@ class DAL_mongo:
         try:
             self.client = MongoClient(self.URI)
             self.client.admin.command("ping")
+            self.connect = True
             return True
         except Exception as e:
             self.client = None
@@ -35,20 +37,23 @@ class DAL_mongo:
 
 
     def get_all(self):
-        if self.client:
+        if self.connect:
             db = self.client[self.database]
             collection = db[self.collection]
-            data = collection.find({}, {"_id": 0})
+            data = collection.find()
             return list(data)
 
 
-    def insert_one(self, data):
-        if self.client:
-            db = self.client[self.database]
-            collection = db[self.collection]
-            results = collection.insert_one(data)
-            return results
+    def insert_data(self, massage):
+        if self.connect:
+            collection = self.database[self.collection]
+            try:
+                results = collection.insert_one(massage)
+                return {"data added successfully: " : massage}
+            except Exception as e:
+                return {"error : ": e}
+
 
     def close_connection(self):
-        if self.client:
+        if self.connect:
             self.client.close()
